@@ -386,18 +386,23 @@ class DatabaseMessageStore implements MessageStore {
         selectionArgs[0] = clientHandle;
 		
 		int rows = 0;
-		if (clientHandle == null) {
-			traceHandler.traceDebug(TAG,
-					"clearArrivedMessages: clearing the table");
-			rows = db.delete(ARRIVED_MESSAGE_TABLE_NAME, null, null);
-		} else {
-			traceHandler.traceDebug(TAG,
-					"clearArrivedMessages: clearing the table of "
-							+ clientHandle + " messages");
-            rows = db.delete(ARRIVED_MESSAGE_TABLE_NAME,
-                    MqttServiceConstants.CLIENT_HANDLE + "=?",
-                    selectionArgs);
+		try{
+			if (clientHandle == null) {
+				traceHandler.traceDebug(TAG,
+						"clearArrivedMessages: clearing the table");
+				rows = db.delete(ARRIVED_MESSAGE_TABLE_NAME, null, null);
+			} else {
+				traceHandler.traceDebug(TAG,
+						"clearArrivedMessages: clearing the table of "
+								+ clientHandle + " messages");
+				rows = db.delete(ARRIVED_MESSAGE_TABLE_NAME,
+						MqttServiceConstants.CLIENT_HANDLE + "=?",
+						selectionArgs);
 
+			}
+		}
+		catch (SQLException e){
+			// swallow. 
 		}
 		traceHandler.traceDebug(TAG, "clearArrivedMessages: rows affected = "
 				+ rows);

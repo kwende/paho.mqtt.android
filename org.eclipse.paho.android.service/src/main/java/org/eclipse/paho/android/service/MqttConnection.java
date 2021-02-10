@@ -265,7 +265,7 @@ class MqttConnection implements MqttCallbackExtended {
 						MqttException exc = (MqttException)exception; 
 						service.traceError(TAG,
 							"GOOGLIEBAH: error code: "
-								+ exc.getReasonCode().toString());
+								+ String.valueOf(exc.getReasonCode()));
 					}
 
 					doAfterConnectFail(resultBundle);

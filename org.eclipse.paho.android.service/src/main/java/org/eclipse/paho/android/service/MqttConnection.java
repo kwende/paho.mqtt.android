@@ -261,6 +261,13 @@ class MqttConnection implements MqttCallbackExtended {
 							"connect fail, call connect to reconnect.reason:"
 									+ exception.getMessage());
 
+					if(exception instanceof MqttException){
+						MqttException exc = (MqttException)exception; 
+						service.traceError(TAG,
+							"GOOGLIEBAH: error code: "
+								+ exc.getReasonCode().toString());
+					}
+
 					doAfterConnectFail(resultBundle);
 
 				}

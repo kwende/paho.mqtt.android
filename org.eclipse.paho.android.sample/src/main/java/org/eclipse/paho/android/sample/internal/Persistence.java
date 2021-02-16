@@ -180,9 +180,11 @@ public class Persistence extends SQLiteOpenHelper implements BaseColumns {
         db.close(); //close the db then deal with the result of the query
 
         if (newRowId == -1) {
+            Log.d(TAG, "GOOGLIEBAH: 1. Failed to persist the connection");
             throw new PersistenceException("Failed to persist connection: " + connection.handle());
         }
         else { //Successfully persisted assigning persistenceID
+            Log.d(TAG, "GOOGLIEBAH: 1. Succeeding in persisting the connection!");
             connection.assignPersistenceId(newRowId);
         }
     }
@@ -248,8 +250,10 @@ public class Persistence extends SQLiteOpenHelper implements BaseColumns {
         long newRowId = db.insert(TABLE_SUBSCRIPTIONS, null, values);
         db.close();
         if(newRowId == -1){
+            Log.d(TAG, "GOOGLIEBAH: 2. Failed to persist the subscription");
             throw new PersistenceException("Failed to persist subscription: " + subscription.toString());
         } else {
+            Log.d(TAG, "GOOGLIEBAH: 2. Failed to persist the subscription");
             subscription.setPersistenceId(newRowId);
             return newRowId;
         }
